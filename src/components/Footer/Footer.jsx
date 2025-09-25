@@ -1,18 +1,16 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
+
 
 const Foot = styled.footer`
-  background: ${({theme}) => theme.colors.card};
-  padding: 16px;
-  text-align:center;
-  font-size:0.95rem;
-  border-top:1px solid rgba(0,0,0,0.03);
+background:transparent;padding:18px 20px;text-align:center;color:${({theme})=>theme.colors.muted};font-size:0.9rem;border-top:1px solid rgba(255,255,255,0.03);
 `;
 
+
 export default function Footer(){
-  return (
-    <Foot>
-      © {new Date().getFullYear()} Mecânica — Feito com carinho. | Telefone: (XX) XXXXX-XXXX
-    </Foot>
-  );
+return (
+<Foot>
+© {new Date().getFullYear()} Mecânica Street • Rua Exemplo, 123 • (XX) XXXXX-XXXX
+</Foot>
+)
 }

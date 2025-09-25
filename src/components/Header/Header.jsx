@@ -1,78 +1,67 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
-const Wrap = styled.header`
-  background: ${({theme}) => theme.colors.card};
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-  padding: 12px 16px;
-  position: sticky;
-  top:0;
-  z-index: 50;
+
+const HeaderWrap = styled.header`
+position:sticky;top:0;z-index:80;
+background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.2));
+backdrop-filter: blur(6px);
+border-bottom: 1px solid rgba(255,255,255,0.03);
 `;
-
 const Row = styled.div`
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  max-width:1100px;
-  margin:0 auto;
+max-width:1200px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;
 `;
-
 const Logo = styled(NavLink)`
-  font-weight:700;
-  font-size:1.15rem;
-  color:${({theme}) => theme.colors.primary};
+font-family: ${({theme}) => theme.fonts.heading};
+font-weight:900;
+letter-spacing:1px;
+color:${({theme}) => theme.colors.primary};
+text-transform:uppercase;
+display:flex;gap:8px;align-items:center;
 `;
-
+const Graffiti = styled.span`
+font-size:0.95rem;color:${({theme})=>theme.colors.accent};transform:translateY(-2px);
+`;
 const Nav = styled.nav`
-  display:flex;
-  gap:12px;
-  align-items:center;
-
-  @media (max-width: 700px) {
-    display: ${props => (props.open ? "flex" : "none")};
-    position: absolute;
-    top:64px;
-    right:16px;
-    flex-direction:column;
-    background: ${({theme}) => theme.colors.card};
-    padding:12px;
-    border-radius:8px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.08);
-  }
+display:flex;gap:14px;align-items:center;
+@media(max-width:700px){ display:none }
+`;
+const NavItem = styled(NavLink)`
+padding:8px 12px;border-radius:8px;color:${({theme})=>theme.colors.muted};
+&.active{ color:${({theme})=>theme.colors.text}; background:rgba(255,255,255,0.03)}
+`;
+const MobileBtn = styled.button`
+display:none;background:transparent;border:0;color:inherit;font-size:20px;
+@media(max-width:700px){ display:block }
 `;
 
-const StyledLink = styled(NavLink)`
-  padding:8px 10px;
-  border-radius:6px;
-  &.active { background: ${({theme})=> theme.colors.primary}; color: white; }
-`;
 
-const Burger = styled.button`
-  display:none;
-  background:transparent;
-  border:0;
-  @media (max-width: 700px) { display:block; }
-`;
-
-export default function Header() {
-  const [open, setOpen] = useState(false);
-  return (
-    <Wrap>
-      <Row>
-        <Logo to="/">Mecânica<span style={{color: "#FF6B00"}}>+</span></Logo>
-        <Nav open={open}>
-          <StyledLink to="/">Home</StyledLink>
-          <StyledLink to="/sobre">Sobre nós</StyledLink>
-          <StyledLink to="/servicos">Serviços</StyledLink>
-          <StyledLink to="/galeria">Galeria</StyledLink>
-          <StyledLink to="/contato">Contato</StyledLink>
-        </Nav>
-        <Burger aria-label="menu" onClick={() => setOpen(o => !o)}>
-          ☰
-        </Burger>
-      </Row>
-    </Wrap>
-  );
+export default function Header(){
+const [open, setOpen] = useState(false);
+return (
+<HeaderWrap>
+<Row>
+<Logo to="/">Mecânica <Graffiti>STREET</Graffiti></Logo>
+<Nav>
+<NavItem to="/">Home</NavItem>
+<NavItem to="/sobre">Sobre</NavItem>
+<NavItem to="/servicos">Serviços</NavItem>
+<NavItem to="/galeria">Galeria</NavItem>
+<NavItem to="/contato">Contato</NavItem>
+</Nav>
+<MobileBtn aria-label="menu" onClick={() => setOpen(v => !v)}>☰</MobileBtn>
+</Row>
+{/* mobile drawer */}
+{open && (
+<div style={{padding:'10px 20px', display:'flex', flexDirection:'column', gap:10}}>
+<NavItem to="/">Home</NavItem>
+<NavItem to="/sobre">Sobre</NavItem>
+<NavItem to="/servicos">Serviços</NavItem>
+<NavItem to="/galeria">Galeria</NavItem>
+<NavItem to="/contato">Contato</NavItem>
+</div>
+)}
+</HeaderWrap>
+)
 }
